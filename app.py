@@ -58,11 +58,11 @@ class PayPingGateway:
     def get_payment_gateway_url(self, code: str) -> str:
         return f"https://api.payping.ir/v1/pay/gotoipg/{code}"
 
-# Flask application
+
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'  # Change this to a secure secret key
 
-# Configure PayPing
+
 PAYPING_API_TOKEN = 'your-api-token-here'  # Replace with your actual API token
 gateway = PayPingGateway(PAYPING_API_TOKEN)
 
@@ -88,8 +88,8 @@ def initiate_payment(product_id):
     
     # Create payment request
     payment = PaymentRequest(
-        amount=product['price'],
-        return_url=url_for('verify_payment', _external=True),
+        amount=int(product['price']),
+        return_url=url_for('verify_payment', _external=True),#must include registered domain
         description=f"Payment for {product['name']}",
         client_ref_id=f"order_{product_id}"
     )
